@@ -7,6 +7,6 @@ function runAjax() {
         document.getElementById('result').innerHTML = this.responseText;
     }
     //xhr.open("GET", "pythoncode.py?text=" + text, true);
-    xhr.open("GET", "test.php", true);
+    xhr.open("GET", "test.cgi", true);
     xhr.send();
 }
