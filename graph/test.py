@@ -5,4 +5,5 @@ if __name__ == "__main__":
         network.generateIP()
     for i in network.ips:
         network.connect(i)
+    print()
     network.traverse()

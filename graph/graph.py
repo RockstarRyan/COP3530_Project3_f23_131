@@ -20,15 +20,15 @@ class graph:
         except:
             raise TypeError("Error: invalid inputs")
         linkInfo = nodeInfo(destinationIp, speed, latency, bandwidth)
-        if(self.graph.get(sourceIp)):
+        if(sourceIp in self.graph):
             self.graph[sourceIp].append(linkInfo)
         else:
             self.graph[sourceIp] = [linkInfo]
     def traverse(self):
         for i in self.graph:
             index = self.graph[i]
-            print(i, end=": ")
             for j in index:
+                print(i, end=": ")
                 print(j.destinationIp, j.speed, j.latency, j.bandwidth)
     def generateIP(self):
         ip = ""
@@ -49,7 +49,8 @@ class graph:
         for i in range(numConnect):
             # picks destination, checks that it isn't source or existing connection
             dest = random.choice(tuple(self.ips))
-            if dest != _sourceIP and dest not in connections:
+            if dest != _sourceIP and dest not in connections and self.checkIsValid(_sourceIP, dest):
+                print(_sourceIP, dest)
                 _speed = float(random.randint(200, 2000)) / 10
                 _latency = float(random.randint(100, 400)) / 10
                 _bandwidth = float(random.randint(30, 300)) / 10
@@ -57,3 +58,13 @@ class graph:
                 self.insert(_sourceIP, dest, _speed, _latency, _bandwidth)
                 self.insert(dest, _sourceIP, _speed, _latency, _bandwidth)
                 connections.add(dest)
+    def checkIsValid(self, sourceIp, destinationIp):
+        if sourceIp in self.graph:
+            for index in self.graph.get(sourceIp):
+                if index.destinationIp == destinationIp:
+                    return False
+        if destinationIp in self.graph:
+            for index in self.graph.get(destinationIp):
+                if index.destinationIp == sourceIp:
+                    return False
+        return True

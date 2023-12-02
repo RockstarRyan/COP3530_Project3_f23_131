@@ -1,7 +1,7 @@
 from graph import graph
 if __name__ == "__main__":
     network = graph()
-    nodesFile = open("nodes.txt", 'r')
+    nodesFile = open("graph/nodes.txt", 'r')
     for line in nodesFile:
         currentLine = line.split(" ")
         source = currentLine[0]
