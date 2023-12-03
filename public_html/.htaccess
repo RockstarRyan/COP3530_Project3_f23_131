@@ -1,0 +1,10 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+RewriteBase /projects/COP3530_Project3_f23_131/public_html/
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !^/projects/COP3530_Project3_f23_131/public_html/app\.js$
+RewriteRule . /projects/COP3530_Project3_f23_131/public_html/index.php [L]
+</IfModule>
