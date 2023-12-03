@@ -41,23 +41,18 @@ class graph:
     def connect(self, _sourceIP : str):
         # randomly generates number of connections
         numConnect = random.randint(0, len(self.ips))
-        connections = set()
-        # makes sure connection hasn't already been made
-        if self.graph.get(_sourceIP):
-            for j in self.graph[_sourceIP]:
-                connections.add(j)
+        
         for i in range(numConnect):
             # picks destination, checks that it isn't source or existing connection
             dest = random.choice(tuple(self.ips))
-            if dest != _sourceIP and dest not in connections and self.checkIsValid(_sourceIP, dest):
-                print(_sourceIP, dest)
-                _speed = float(random.randint(200, 2000)) / 10
-                _latency = float(random.randint(100, 400)) / 10
-                _bandwidth = float(random.randint(30, 300)) / 10
-
+            # makes sure connection hasn't already been made
+            if dest != _sourceIP and self.checkIsValid(_sourceIP, dest):
+                _speed = float(random.randint(200, 5000)) / 10
+                _latency = random.randint(10, 40) 
+                _bandwidth = random.randint(50, 1000)
                 self.insert(_sourceIP, dest, _speed, _latency, _bandwidth)
                 self.insert(dest, _sourceIP, _speed, _latency, _bandwidth)
-                connections.add(dest)
+    # Checks if the edge is already in the graph
     def checkIsValid(self, sourceIp, destinationIp):
         if sourceIp in self.graph:
             for index in self.graph.get(sourceIp):
