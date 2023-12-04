@@ -11,6 +11,7 @@ if __name__ == "__main__":
     for i in network.ips:
         network.connect(i)
     network.traverse()
+    network.saveToFile()
     for x in network.ips:
         table = Bellman_Ford(network.graph, x, "speed")
         break
