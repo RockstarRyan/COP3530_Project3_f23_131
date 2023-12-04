@@ -24,8 +24,9 @@ def readToFile():
        info = row.split(",")
        network.insert(info[0], info[1], info[2], info[3], info[4][:-1])
 def dijkstraRun(sourceIp, destinationIp, parameter):
+    if sourceIp not in network.graph or destinationIp not in network.graph:
+        return [0,0]
     table = dijkstra(network.graph, sourceIp, parameter)
-    print(table)
     count = 1
     index = table.get(destinationIp)[1]
     totalParamter = 0
@@ -37,8 +38,9 @@ def dijkstraRun(sourceIp, destinationIp, parameter):
     return [count, totalParamter]
 
 def bellmanFordRun(sourceIp, destinationIp, parameter):
+    if sourceIp not in network.graph or destinationIp not in network.graph:
+        return [0,0]
     table =  Bellman_Ford(network.graph, sourceIp, parameter)
-    print(table)
     count = 1
     index = table.get(destinationIp)[1]
     totalParameter = 0

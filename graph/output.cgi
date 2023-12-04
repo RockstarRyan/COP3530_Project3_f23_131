@@ -26,7 +26,7 @@ def main():
         resultsD = dijkstraRun(router1,router2,"latency")
 
         # Print algorithm results in JSON format (to be read by JS program)
-        print("{bellmanFord:{count:'"+resultsB[0]+"', latency:'"+resultsB[1]+"'}, dijkstras:{count:'"+resultsD[0]+"', latency:'"+resultsD[1]+"','}")
+        print("{bellmanFord:{count:'"+ str(resultsB[0]) +"', latency:'"+ str(resultsB[1]) +"'}, dijkstras:{count:'" + str(resultsD[0]) +"', latency:'"+ str(resultsD[1]) +"','}")
 
 if __name__ == '__main__':
     main()

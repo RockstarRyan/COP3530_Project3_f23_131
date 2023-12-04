@@ -8,6 +8,6 @@ if __name__ == "__main__":
     readToFile()
     sourceIp = input("SourceIp: ")
     destinationIp = input("DestinationIp: ")
-    parameter = "speed"
+    parameter = "latency"
     print(dijkstraRun(sourceIp, destinationIp, parameter))
     print(bellmanFordRun(sourceIp, destinationIp, parameter))
