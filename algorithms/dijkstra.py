@@ -1,5 +1,11 @@
 import sys
 
+def convert(parameter):
+    if parameter == sys.maxsize or parameter == 0:
+        return parameter
+    else:
+        return 1/parameter
+
 def dijkstra(graph, start, parameter):
     table = dict()
     s = set()
@@ -37,11 +43,11 @@ def dijkstra(graph, start, parameter):
         for dest in graph[minVert]:
             val = 0
             if parameter == "speed":
-                val = dest.speed
+                val = convert(dest.speed)
             elif parameter == "latency":
                 val = dest.latency
             elif parameter == "bandwidth":
-                val = dest.bandwidth
+                val = convert(dest.bandwidth)
             if table.get(minVert)[0] + val < table.get(dest.destinationIp)[0]:
                 table.get(dest.destinationIp)[0] = table.get(minVert)[0] + val
                 table.get(dest.destinationIp)[1] = minVert
