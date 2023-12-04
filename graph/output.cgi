@@ -9,6 +9,7 @@ import sys
 sys.stderr = open("err.log",'w')
 
 import graph
+from main import *
 import algorithms
 
 print('Content-type: text/html \n\n')
@@ -22,11 +23,12 @@ def main():
         
     else:
         # Call graph algorithms
-        resultsB = algorithms.bellmanFord(router1,router2)
-        resultsD = algorithms.dijkstras(router1,router2)
+        main.main()
+        resultsB = bellmanFordRun(router1,router2, "latency")
+        resultsD = dijkstraRun(router1,router2, "latency")
         
         # Print algorithm results in JSON format (to be read by JS program)
-        print("{bellmanFord:{speed:'"+resultsB.speed+"', latency:'"+resultsB.latency+"', bandwidth:'"+resultsB.bandwidth+"'}, dijkstras:{speed:'"+resultsD.speed+"', latency:'"+resultsD.latency+"', bandwidth:'"+resultsD.bandwidth+"'}")
+        print("{bellmanFord:{count:'"+resultsB[0]+"', latency:'"+resultsB[1]+"'}, dijkstras:{count:'"+resultsD[0]+"', latency:'"+resultsD[1]+"','}")
 
 if __name__ == '__main__':
     main()
