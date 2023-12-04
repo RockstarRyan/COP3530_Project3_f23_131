@@ -12,16 +12,21 @@ def Bellman_Ford(graph, sourceIp, parameter):
         for vertices in graph:
             for dest in graph.get(vertices):
                 value = 0
-                factor = 1
+                invert = False
                 if parameter == "speed":
                     value = dest.speed
-                    factor = -1
+                    invert = True
                 elif parameter == "latency":
                     value = dest.latency
                 elif parameter == "bandwidth":
                     value = dest.bandwidth
-                    factor = -1 
-                if convert(value) + convert(table.get(vertices)[0]) < convert(table.get(dest.destinationIp)[0]):
-                    table.get(dest.destinationIp)[0] = table.get(vertices)[0] + value
-                    table.get(dest.destinationIp)[1] = vertices
+                    invert = True
+                if invert:
+                    if convert(value) + convert(table.get(vertices)[0]) < convert(table.get(dest.destinationIp)[0]):
+                        table.get(dest.destinationIp)[0] = table.get(vertices)[0] + value
+                        table.get(dest.destinationIp)[1] = vertices
+                else:
+                    if value + table.get(vertices)[0] < table.get(dest.destinationIp)[0]:
+                        table.get(dest.destinationIp)[0] = table.get(vertices)[0] + value
+                        table.get(dest.destinationIp)[1] = vertices
     return table
