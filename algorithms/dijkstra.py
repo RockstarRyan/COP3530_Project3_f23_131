@@ -13,8 +13,15 @@ def dijkstra(graph, start, parameter):
             hasEdge = False
             for i in graph[start]:
                 if i.destinationIp == vertex:
+                    val = 0
+                    if parameter == "speed":
+                        val = i.speed
+                    elif parameter == "latency":
+                        val = i.latency
+                    elif parameter == "bandwidth":
+                        val = i.bandwidth
                     hasEdge = True
-                    table[vertex] = [i.speed, start]
+                    table[vertex] = [val, start]
             if not hasEdge:
                 table[vertex] = [sys.maxsize, start]
 
