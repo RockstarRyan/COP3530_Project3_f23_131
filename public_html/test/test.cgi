@@ -12,6 +12,7 @@ print('Content-type: text/html \n\n')
 
 def main():
     print("Testing..1..2..3!")
+    print(sys.argv)
 
 if __name__ == '__main__':
     main()

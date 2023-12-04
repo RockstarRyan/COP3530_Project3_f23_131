@@ -36,8 +36,8 @@ const Site = {
 	cmpnts: {
 		nav: [
 			{title:'Home', icon:'home-outline', link:''}, // mail-unread-outline
-			{title:'Updates', icon:'newspaper-outline'},
-			{title:'Leadership', icon:'chatbox-outline',}
+			{title:'List', icon:'list-outline'},
+			{title:'Compute', icon:'calculator-outline',}
 			//{title:'Events', icon:'calendar-outline'},
 			//{title:'Downloads', icon:'download-outline'},
 			//{title:'Admin', icon:'cog-outline'}

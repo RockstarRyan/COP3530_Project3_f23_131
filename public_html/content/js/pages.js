@@ -2,38 +2,29 @@
 const Pages = (path) => {
 	if (path.length == 1) {switch (path[0]) {
 		case '': return {
-			title: "Fall Fellowship",
+			title: "Home",
 			// nav_menu: 'home',
 			// back: {text:'Back', onclick:'navigateTo("'+path[0]+'")'},
 			content: [
 				DOM.create('div',{class:'align-middle'},[
-					DOM.create('h2',{},"Welcome to the 75th Anniversary Fall Fellowship!")
+					DOM.create('h2',{},"Project 3 – Router Tracing")
 				]),
 				DOM.EZ.spacer(20),
 				DOM.create('div',{class:'large-text'},[
 					DOM.EZ.p(''),
 					DOM.create('p',{},[
-						"Download the ",DOM.EZ.a('ic',"ff-2021-event-passport.pdf",{},'event passport'),". Updates are posted ",DOM.EZ.a('i','updates',{},'here'),".",
+						"View the ",DOM.EZ.a('i','list',{},'full list')," of routers.",
 					]),
 					DOM.create('p',{},[
-						"Questions? View ",DOM.EZ.a('i','leadership',{},'contact information')," for the weekend leadership team.",
+						DOM.EZ.a('i','compute',{},'Compute')," the optimal path between two routers based on a specified parameter.",
 					]),
 				]),
-				DOM.create('p',{class:'article-foot'},DOM.text('Event Staff')),
+				DOM.create('p',{class:'article-foot'},DOM.text('Team #131')),
 			],
 			callback: () => {},
 		};
-		case 'updates': return {
-			title: "Updates",
-			// nav_menu: 'profile',
-			// back: {text:'All Articles', onclick:'navigateTo("'+path[0]+'")'},
-			content: [
-				Widget.news.feed.create('newsfeed',path[0],getDocsWithFieldCond('articles',{}),1)
-			],
-			callback: () => {},
-		};
-		case 'leadership': return {
-			title: "Leadership",
+		case 'list': return {
+			title: "List",
 			// nav_menu: 'profile',
 			// back: {text:'All Articles', onclick:'navigateTo("'+path[0]+'")'},
 			content: [
@@ -61,17 +52,8 @@ const Pages = (path) => {
 			],
 			callback: () => {},
 		};
-		case 'events': return {
-			title: "Upcoming Events",
-			// nav_menu: 'profile',
-			// back: {text:'Back', onclick:'navigateTo("'+path[0]+'")'},
-			content: [
-				Widget.calendar.create('upcoming-events', objectToArray(getDocsWithFieldCond('events',{})), new Date()),
-			],
-			callback: () => {},
-		};
-		case 'downloads': return {
-			title: "Downloads",
+		case 'compute': return {
+			title: "Compute",
 			// nav_menu: 'profile',
 			// back: {text:'Back', onclick:'navigateTo("'+path[0]+'")'},
 			content: [
@@ -85,88 +67,6 @@ const Pages = (path) => {
 			callback: () => {
 
 			},
-		};
-		case 'post-article': return {
-			title: "Admin Console",
-			// nav_menu: 'profile',
-			// back: {text:'Back', onclick:'navigateTo("'+path[0]+'")'},
-			content: [
-				Widget.expandable.create('create-event','Create an Event',false,[
-				]),
-				Widget.expandable.create('post-article','Post an Article',true,[
-					Widget.form.create('post-article-form',[
-						{label:'path1', props:{placeholder:'Article Path'}},
-						{label:'Title', props:{placeholder:'Article Title'}},
-						{label:'Author', props:{type:'select',options:['Ryan Gross','Peter Fox'],selectedIndex:'Ryan Gross'}},
-						{label:'Date', props:[
-							{type:'text', size:'4', value:new Date().getFullYear()},
-							{type:'text', size:'2', value:new Date().getMonth()},
-							{type:'text', size:'2', value:new Date().getDate()},
-							{type:'text', size:'2', placeholder:0},
-						]},
-						{label:'Edition', props:{type:'select',options:[['#1 – 2020-05','#1'],['#2 – 2020-06','#2'],['#3 – 2021-01','#3'],['Online','Online']],selectedIndex:'#1'}},
-						{label:'Unread', props:{type:'checkbox'}},
-						{label:'Content', props:{type:'textarea'}},
-					],() => {
-						var id = "#post-article-form";
-						var inputs = ['title','author','authorPic','date','edition','unread','content'];
-
-						result = '"'+get(id+'-path1').value+'": {';
-						for (var i = 0; i < inputs.length; i++) {
-							result += inputs[i].substring(0,1).toLowerCase() + inputs[i].substring(1) + ':';
-							switch (inputs[i]) {
-								case 'date': {
-									result += 'new Date(';
-									for (var j = 0; j < 4; j++) {
-										result += get(id+'-'+inputs[i].toLowerCase()+'-'+j).value;
-										if (j < 2) {result += ', ';}
-									}
-									result += ')';
-								} break;
-								case 'unread': result += (get(id+'-'+inputs[i].toLowerCase()).checked); break;
-								case 'author': result += "'"+db.users[get(id+'-author').value].title+"'"; break;
-								case 'authorPic': result += "'"+db.users[get(id+'-author').value].picture+"'"; break;
-								case 'content': {
-									result += "'";
-									var lines = get(id+'-'+inputs[i].toLowerCase()).value.split('\n');
-									for (var j = 0; j < lines.length; j++) {
-										if (lines[j].indexOf('img_w_capt') >= 0) {
-											var props = lines[j].split('  ');
-											result += DOM.create('div',{class:'align-middle', innerHTML:Widget.img_w_capt.create(props[1].split('.')[0],props[1],props[2]).outerHTML}).outerHTML;
-										} else {
-											result += DOM.create('p',{innerHTML:lines[j]}).outerHTML;
-										}
-									}
-									result += "'";
-								} break;
-								default: result += '"'+get(id+'-'+inputs[i].toLowerCase()).value+'"'; break;
-							}
-							if (i < inputs.length-1) {result += ', ';}
-						}
-						result += '},';
-						var element = DOM.create('div'); element.innerText = result;
-						DOM.append(get('#post-article-result'),element);
-					}),
-					DOM.create('p',{},[
-						DOM.create('strong',{},DOM.text('Result: ')),
-						DOM.create('code',{id:'post-article-result'})
-					]),
-					DOM.create('button',{onclick:'get("#post-article-result").innerHTML=""'},DOM.text('Clear'))
-				]),
-			],
-			callback: () => {
-
-			},
-		};
-	}} else if (path.length == 2) {switch (path[0]) {
-		case 'updates': return {
-			title: Widget.news.article.title(getDocsWithFieldCond('articles',{}),path[1]),
-			// nav_menu: 'profile',
-			back: {text:'All Articles', onclick:'navigateTo("'+path[0]+'")'},
-			content: [
-				Widget.news.article.create('newsfeed',getDocsWithFieldCond('articles',{}),path[0],path[1],false)
-			],
-			callback: () => {},
 		};
 	}}
 	return {

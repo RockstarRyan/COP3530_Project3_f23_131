@@ -7,6 +7,9 @@ function runAjax() {
         document.getElementById('result').innerHTML = this.responseText;
     }
     //xhr.open("GET", "pythoncode.py?text=" + text, true);
-    xhr.open("GET", "test.php", true);
-    xhr.send();
+    //xhr.open("GET", "test.cgi?p1='hello_world'", true);
+    //xhr.send();
+    xhr.open("POST", "test.cgi", true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.send("p1=Hello");
 }
