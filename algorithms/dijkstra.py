@@ -42,13 +42,21 @@ def dijkstra(graph, start, parameter):
         s.add(minVert)
         for dest in graph[minVert]:
             val = 0
+            invert = False
             if parameter == "speed":
-                val = convert(dest.speed)
+                val = dest.speed
+                invert = True
             elif parameter == "latency":
                 val = dest.latency
             elif parameter == "bandwidth":
-                val = convert(dest.bandwidth)
-            if table.get(minVert)[0] + val < table.get(dest.destinationIp)[0]:
-                table.get(dest.destinationIp)[0] = table.get(minVert)[0] + val
-                table.get(dest.destinationIp)[1] = minVert
+                val = dest.bandwidth
+                invert = True
+            if invert:
+                if convert(table.get(minVert)[0]) + convert(val) < convert(table.get(dest.destinationIp)[0]):
+                    table.get(dest.destinationIp)[0] = table.get(minVert)[0] + val
+                    table.get(dest.destinationIp)[1] = minVert
+            else:
+                if table.get(minVert)[0] + val < table.get(dest.destinationIp)[0]:
+                    table.get(dest.destinationIp)[0] = table.get(minVert)[0] + val
+                    table.get(dest.destinationIp)[1] = minVert
     return table
