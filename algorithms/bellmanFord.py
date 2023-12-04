@@ -1,4 +1,6 @@
 import sys
+sys.path.append( '.' )
+from algorithms.dijkstra import *
 
 def Bellman_Ford(graph, sourceIp, parameter):
     table = dict()
@@ -19,7 +21,7 @@ def Bellman_Ford(graph, sourceIp, parameter):
                 elif parameter == "bandwidth":
                     value = dest.bandwidth
                     factor = -1 
-                if pow(value, factor) + (table.get(vertices)[0] if table.get(vertices)[0] == 0 or table.get(vertices)[0] == 0.0 else pow(table.get(vertices)[0], factor)) < (table.get(dest.destinationIp)[0] if table.get(dest.destinationIp)[0] == sys.maxsize or table.get(dest.destinationIp)[0] == 0.0 else pow(table.get(dest.destinationIp)[0], factor)):
+                if convert(value) + convert(table.get(vertices)[0]) < convert(table.get(dest.destinationIp)[0]):
                     table.get(dest.destinationIp)[0] = table.get(vertices)[0] + value
                     table.get(dest.destinationIp)[1] = vertices
     return table

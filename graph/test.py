@@ -10,7 +10,7 @@ if __name__ == "__main__":
         network.generateIP()
     for i in network.ips:
         network.connect(i)
-    network.traverse()
+    # network.traverse()
     network.saveToFile()
     for x in network.ips:
         table = Bellman_Ford(network.graph, x, "speed")

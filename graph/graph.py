@@ -31,11 +31,11 @@ class graph:
                 print(i, end=": ")
                 print(j.destinationIp, j.speed, j.latency, j.bandwidth)
     def saveToFile(self):
-        file = open("graph/nodes.txt", "w")
+        file = open("graph/nodes.csv", "w")
         for i in self.graph:
             index = self.graph[i]
             for j in index:
-                file.write(str(i) + " " + str(j.destinationIp) + " " + str(j.speed) + " " + str(j.latency) + " " + str(j.bandwidth) + "\n")
+                file.write(str(i) + "," + str(j.destinationIp) + "," + str(j.speed) + "," + str(j.latency) + "," + str(j.bandwidth) + "\n")
         file.close()
     def generateIP(self):
         ip = ""
