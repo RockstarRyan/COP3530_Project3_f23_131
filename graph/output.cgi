@@ -1,5 +1,17 @@
+#!/usr/bin/python3
+
+"""
+Project:    COP 3530 Project #3
+Developers: Jackson Kelly, Adam Benali, Ryan Gross
+"""
+
+import sys
+sys.stderr = open("err.log",'w')
+
 import graph
 import algorithms
+
+print('Content-type: text/html \n\n')
 
 def main():
     # Don't worry about these for now...

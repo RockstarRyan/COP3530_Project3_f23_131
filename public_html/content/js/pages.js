@@ -28,25 +28,88 @@ const Pages = (path) => {
 			// nav_menu: 'profile',
 			// back: {text:'All Articles', onclick:'navigateTo("'+path[0]+'")'},
 			content: [
-				DOM.create('div',{class:'align-middle', id:''},[
-					DOM.create('button', {class:'primary',onclick:'onclick_list()'}, 'Load Data')
+				DOM.create('div',{class:'align-middle', id:'list-loading'},[
+					DOM.EZ.p('Loading...')
 				]),
-				DOM.EZ.spacer(20),
 				DOM.create('div',{id:'list-container'}),
 			],
-			callback: () => {},
+			callback: () => {
+				if (get('#list-container').children.length == 0) {
+					ajax('../../graph/nodes.csv',(response)=>{
+						//DOM.append(get('#list-container'),DOM.EZ.p(response.responseText));
+						var array = [
+							["Source Router", "Destination Router", "Speed (Mbps)", "Latency (s)", "Bandwidth (Mbps)"]
+						];
+						for (var line of response.responseText.split('\n')) {
+							if (line != "") {
+								array.push(line.split(','));
+							}
+						}
+						//console.log(array);
+						DOM.append(get('#list-container'),DOM.EZ.table(array,{},1,0));
+						get('main').removeChild(get('#list-loading'));
+					});
+				}
+			},
 		};
 		case 'compute': return {
 			title: "Compute",
 			// nav_menu: 'profile',
 			// back: {text:'Back', onclick:'navigateTo("'+path[0]+'")'},
 			content: [
-				DOM.EZ.p('Click one of the links below to access and/or download a PDF version of a Huracan Herald edition. Editions are listed in descending order with the most recent at the top.'),
-				Widget.link_list.create('hh-downloads',[
-					{type:'ic', href:'files/HH_3_2021-01_FINAL.pdf', attributes:{target:"_blank"}, innerHTML:'Edition #3 – JAN-FEB 2021'},
-					{type:'ic', href:'files/HH_2_2020-06_FINAL.pdf', attributes:{target:"_blank"}, innerHTML:'Edition #2 – NOV-DEC 2020'},
-					{type:'ic', href:'files/HH_1_2020-05_FINAL.pdf', attributes:{target:"_blank"}, innerHTML:'Edition #1 – SEP-OCT 2020'},
-				])
+				Widget.expandable.create('computation-settings','Computation Settings',true,[
+					Widget.form.create('computation-settings-form',[
+						{label:'Source', props:[
+							{type:'number', min:0, max:255, placeholder:255},
+							{type:'number', min:0, max:255, placeholder:255},
+							{type:'number', min:0, max:255, placeholder:255},
+							{type:'number', min:0, max:255, placeholder:255},
+						]},
+						{label:'Destination', props:[
+							{type:'number', min:0, max:255, placeholder:255},
+							{type:'number', min:0, max:255, placeholder:255},
+							{type:'number', min:0, max:255, placeholder:255},
+							{type:'number', min:0, max:255, placeholder:255},
+						]},
+						{label:'Measurement', props:{type:'select',options:[
+							['Speed','speed'],
+							['Latency','latency'],
+							['Bandwidth','bandwidth']],selectedIndex:'speed'}},
+					],() => {
+						var id = "#computation-settings-form";
+						var source = "", destination = "";
+						var measurement = get(id+'-measurement').value;
+
+						for (var j = 0; j < 4; j++) {
+							source += get(id+'-source-'+j).value;
+							destination += get(id+'-destination-'+j).value;
+							if (j < 3) {
+								source += '.';
+								destination += '.';
+							}
+						}
+
+						var element = DOM.create('div',{},DOM.text(source+" "+destination+" "+measurement));
+						DOM.append(get('#computation-result'),element);
+
+						ajax('../content/scripts/input.php?source='+source+'&destination='+destination+'&measurement='+measurement,(response)=>{
+							var element = DOM.create('div',{},DOM.text(response.responseText));
+							DOM.append(get('#computation-result'),element);
+
+							ajax('../../graph/output.cgi',(response)=>{
+								var element = DOM.create('div',{},DOM.text(response.responseText));
+								DOM.append(get('#computation-result'),element);
+							});
+						});
+					})
+				]),
+				Widget.expandable.create('computation-results','Computation Results',true,[
+					DOM.create('p',{},[
+						DOM.create('strong',{},DOM.text('Result: ')),
+						DOM.create('code',{id:'computation-result'})
+					]),
+					DOM.create('button',{onclick:'get("#computation-result").innerHTML=""'},DOM.text('Clear'))
+				]),
 			],
 			callback: () => {
 
@@ -67,20 +130,3 @@ const Pages = (path) => {
 		callback: () => {},
 	};
 };
-
-function onclick_list() {
-	ajax('../../graph/nodes.csv',(response)=>{
-		//DOM.append(get('#list-container'),DOM.EZ.p(response.responseText));
-		var array = [
-			["Router #1", "Router #2", "Speed", "Latency", "Bandwidth"]
-		];
-		for (var line of response.responseText.split('\n')) {
-			if (line != "") {
-				array.push(line.split(','));
-			}
-		}
-		console.log(array);
-		DOM.append(get('#list-container'),DOM.EZ.table(array,{},1,0));
-		get('#list-container').removeChild('#list-container button')
-	});
-}

@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/Users/ryan/Websites/MAMP/projects/COP3530_Project3_f23_131/graph/output.cgi", line 12, in <module>
+    import algorithms
+ModuleNotFoundError: No module named 'algorithms'

@@ -105,7 +105,8 @@ a:hover {color:var(--color-a);}
 
 table {border-collapse:collapse; width:100%;}
 table tr > * {border:1px solid var(--cp-darkgray); padding:8px;}
-table th {background-color:var(--cp-acc2)}
+table th {background-color:var(--cp-acc2); text-align:left;}
+table td {text-align:right;}
 
 .soggy {font-style:italic; color:#888;}
 .signature {font-family:var(--ff-cursive); font-size:32px;}

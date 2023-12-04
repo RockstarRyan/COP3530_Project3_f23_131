@@ -1,9 +1,9 @@
 
 const Site = {
 
-	title: "Fall Fellowship",
+	title: "COP 3530 Project 3",
 	root: root_uri,
-	adminEmail: "secretary@tipisa.org",
+	adminEmail: "grossr@ufl.edu",
 
 	useDarkTheme: window.matchMedia('(prefers-color-scheme: dark)').matches,
 
