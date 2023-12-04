@@ -10,9 +10,6 @@ sys.stderr = open("err.log",'w')
 
 import graph
 from main import *
-import sys
-sys.path.append( '.' )
-import algorithms
 
 print('Content-type: text/html \n\n')
 
