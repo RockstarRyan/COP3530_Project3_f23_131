@@ -31,7 +31,7 @@ class graph:
                 print(i, end=": ")
                 print(j.destinationIp, j.speed, j.latency, j.bandwidth)
     def saveToFile(self):
-        file = open("graph/nodes.csv", "w")
+        file = open("nodes.csv", "w")
         for i in self.graph:
             index = self.graph[i]
             for j in index:
@@ -47,7 +47,7 @@ class graph:
         self.ips.add(ip)
     def connect(self, _sourceIP : str):
         # randomly generates number of connections
-        numConnect = random.randint(0, len(self.ips))
+        numConnect = random.randint(1, 100)
         
         for i in range(numConnect):
             # picks destination, checks that it isn't source or existing connection

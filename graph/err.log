@@ -1,7 +1,0 @@
-Traceback (most recent call last):
-  File "C:\Users\amekn\Desktop\DSA\Project3\graph\output.cgi", line 34, in <module>
-    main()
-  File "C:\Users\amekn\Desktop\DSA\Project3\graph\output.cgi", line 25, in main
-    main.main()
-    ^^^^^^^^^
-AttributeError: 'function' object has no attribute 'main'
