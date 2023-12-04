@@ -40,7 +40,9 @@ const Pages = (path) => {
 						var array = [
 							["Source Router", "Destination Router", "Speed (Mbps)", "Latency (s)", "Bandwidth (Mbps)"]
 						];
+						var i = 0;
 						for (var line of response.responseText.split('\n')) {
+							console.log(i++);
 							if (line != "") {
 								array.push(line.split(','));
 							}

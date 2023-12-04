@@ -7,14 +7,14 @@ from algorithms.dijkstra import *
 network = graph()
 
 def generate():
-    for i in range(100000):
+    for i in range(2100):
         network.generateIP()
-        print('Generating node '+str(i)+' of 100000...')
+        print('Generating node '+str(i)+' of 2000...')
     
     j = 0
     for i in network.ips:
         network.connect(i)
-        print('Connecting node '+str(j)+' of 100000...')
+        print('Connecting node '+str(j)+' of 2000...')
         j+=1
     network.saveToFile()
     print('Done.')
