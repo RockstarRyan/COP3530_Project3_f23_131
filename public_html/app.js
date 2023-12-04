@@ -1,4 +1,11 @@
 
+/*
+ * "JSPress" framework by Ryan Gross (grossr@ufl.edu)
+ * Copyright &copy; 2021-2023 Ryan Gross. All rights reserved.
+ * Permission given for Fall 2023 COP 3530 Project 3 Team #131
+ *     to use and modify the framework as seen fit.
+ */
+
 const Site = {
 
 	title: "COP 3530 Project 3",

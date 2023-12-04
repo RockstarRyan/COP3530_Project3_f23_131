@@ -1,7 +1,5 @@
 var db = {
-	articles: {
-		"welcome": {title:"Welcome!", author:'Event Staff', authorPic:'tipisa.png', date:new Date(2021, 8, 9), edition:"Online", starred:true, content:'<p>Welcome to the 75th Anniversary Fall Fellowship! All updates to the Event Passport will be posted here.</p>'},
-	},
+	lines: []
 };
 
 

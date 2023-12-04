@@ -45,4 +45,5 @@ def bellmanFordRun(sourceIp, destinationIp, parameter):
             count += 1
     return [count, totalParameter]
 
-generate()
+if __name__ == '__main__':
+    generate()

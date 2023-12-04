@@ -22,10 +22,9 @@ def main():
         
     else:
         # Call graph algorithms
-        main.main()
-        resultsB = bellmanFordRun(router1,router2, "latency")
-        resultsD = dijkstraRun(router1,router2, "latency")
-        
+        resultsB = bellmanFordRun(router1,router2,"latency")
+        resultsD = dijkstraRun(router1,router2,"latency")
+
         # Print algorithm results in JSON format (to be read by JS program)
         print("{bellmanFord:{count:'"+resultsB[0]+"', latency:'"+resultsB[1]+"'}, dijkstras:{count:'"+resultsD[0]+"', latency:'"+resultsD[1]+"','}")
 

@@ -29,7 +29,7 @@ const Pages = (path) => {
 			// back: {text:'All Articles', onclick:'navigateTo("'+path[0]+'")'},
 			content: [
 				DOM.create('div',{class:'align-middle', id:'list-loading'},[
-					DOM.EZ.p('Loading...')
+					DOM.EZ.p('Loading... (this may take up to five minutes)')
 				]),
 				DOM.create('div',{id:'list-container'}),
 			],
@@ -38,17 +38,20 @@ const Pages = (path) => {
 					ajax('../../graph/nodes.csv',(response)=>{
 						//DOM.append(get('#list-container'),DOM.EZ.p(response.responseText));
 						var array = [
-							["Source Router", "Destination Router", "Speed (Mbps)", "Latency (s)", "Bandwidth (Mbps)"]
+							["Row #", "Source Router", "Destination Router", "Speed (Mbps)", "Latency (s)", "Bandwidth (Mbps)"]
 						];
-						var i = 0;
-						for (var line of response.responseText.split('\n')) {
-							console.log(i++);
-							if (line != "") {
-								array.push(line.split(','));
-							}
-						}
+
+						db.lines = response.responseText.split('\n');
+
 						//console.log(array);
-						DOM.append(get('#list-container'),DOM.EZ.table(array,{},1,0));
+						DOM.append(get('#list-container'),[
+							DOM.EZ.table(array,{id:'list'},1,0),
+							DOM.EZ.spacer(20),
+							DOM.create('div',{class:'align-middle'},[
+								DOM.create('p',{id:'list-count'},"Showing 0 of "+db.lines.length+" lines"),
+								DOM.create('button',{onclick:'load_more()'},"Load More")
+							]),
+						]);
 						get('main').removeChild(get('#list-loading'));
 					});
 				}
@@ -132,3 +135,23 @@ const Pages = (path) => {
 		callback: () => {},
 	};
 };
+
+function load_more() {
+	var numberToLoad = 1000;
+	var base = get('#list tbody').childElementCount;
+	for (var i = base; i < base+numberToLoad; i++) {
+		line = db.lines[i].split(',');
+		//console.log(i,line);
+		if (line != "") {
+			DOM.append(get('#list tbody'),DOM.create('tr',{},[
+				DOM.create('td',{},i+1),
+				DOM.create('td',{},line[0]),
+				DOM.create('td',{},line[1]),
+				DOM.create('td',{},line[2]),
+				DOM.create('td',{},line[3]),
+				DOM.create('td',{},line[4]),
+			]));
+		}
+	}
+	get('#list-count').innerText = "Showing "+(base+numberToLoad)+" of "+db.lines.length+" lines";
+}
