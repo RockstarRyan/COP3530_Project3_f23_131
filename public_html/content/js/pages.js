@@ -28,27 +28,11 @@ const Pages = (path) => {
 			// nav_menu: 'profile',
 			// back: {text:'All Articles', onclick:'navigateTo("'+path[0]+'")'},
 			content: [
-				Widget.expandable.create('weekend-leadership','Weekend Leadership',true,[
-					DOM.EZ.table([
-						["Position",							"Name",						"Email"],
-						["Weekend / Quest Event Chair",			"Liv Foster",				DOM.EZ.a("m","secondvicechief@tipisa.org")],
-						["Fundraising / Expo Chair",			"Drew Jansen",				DOM.EZ.a("m","")],
-						["75th Committee Advisor",				"Howard Gross",				DOM.EZ.a("m","")],
-						["75th Weekend Advisor",				"Matt Rowe",				DOM.EZ.a("m","")],
-						["Lodge Chief/Advisor Reunion Advisor",	"Greg Raymond",				DOM.EZ.a("m","")],
-						["Registration Chair",					"Ryan Gross",				DOM.EZ.a("m","secretary@tipisa.org")],
-						["Brotherhood Chair",					"Marc Homburger Jacobs",	DOM.EZ.a("m","firstvicechief@tipisa.org")],
-						["King’s Cup Chair",					"Clinton Kuropkat",			DOM.EZ.a("m","historian@tipisa.org")],
-					],{},1,0)
+				DOM.create('div',{class:'align-middle', id:''},[
+					DOM.create('button', {class:'primary',onclick:'onclick_list()'}, 'Load Data')
 				]),
-				Widget.expandable.create('lodge-leadership','Lodge Leadership',true,[
-					DOM.EZ.table([
-						["Position",			"Name",				"Email"],
-						["Lodge Chief",			"Andrew Kerns",		DOM.EZ.a("m","chief@tipisa.org")],
-						["Lodge Advisor",		"Dawn Gross",		DOM.EZ.a("m","advisor@tipisa.org")],
-						["OA Staff Advisor",	"Henry Knowles",	DOM.EZ.a("m","")],
-					],{},1,0)
-				]),
+				DOM.EZ.spacer(20),
+				DOM.create('div',{id:'list-container'}),
 			],
 			callback: () => {},
 		};
@@ -75,7 +59,7 @@ const Pages = (path) => {
 			DOM.EZ.p('Sorry, but the page you are looking for does not exist. Please use the navigation menu at the bottom of the screen to help you find what you are looking for.'),
 			DOM.EZ.spacer(10),
 			DOM.create('div',{class:'align-middle'},[
-				DOM.create('a',{href:'mailto:'+Site.adminEmail}, [
+				DOM.create('a',{href:'mailto:'+Site.adminEmail},[
 					DOM.create('button', {class:'primary'}, 'Email Webmaster')
 				])
 			]),
@@ -83,3 +67,20 @@ const Pages = (path) => {
 		callback: () => {},
 	};
 };
+
+function onclick_list() {
+	ajax('../../graph/nodes.csv',(response)=>{
+		//DOM.append(get('#list-container'),DOM.EZ.p(response.responseText));
+		var array = [
+			["Router #1", "Router #2", "Speed", "Latency", "Bandwidth"]
+		];
+		for (var line of response.responseText.split('\n')) {
+			if (line != "") {
+				array.push(line.split(','));
+			}
+		}
+		console.log(array);
+		DOM.append(get('#list-container'),DOM.EZ.table(array,{},1,0));
+		get('#list-container').removeChild('#list-container button')
+	});
+}

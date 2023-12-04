@@ -154,11 +154,11 @@ function objectToArray(object) {
 
 // ******** AJAX ***********
 
-function ajax(url, callback, arg1, arg2) {
+function ajax(url, callback, ...args) {
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
-			callback(this, arg1, arg2);
+			callback(this, ...args);
 			AJAXRequestComplete = true;
 		}
 	};
