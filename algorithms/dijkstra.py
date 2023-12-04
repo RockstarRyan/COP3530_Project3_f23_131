@@ -1,6 +1,6 @@
 import sys
 
-def dijkstra(graph, start):
+def dijkstra(graph, start, parameter):
     table = dict()
     s = set()
     table[start] = [0, None]
@@ -28,7 +28,14 @@ def dijkstra(graph, start):
         vs.remove(minVert)
         s.add(minVert)
         for dest in graph[minVert]:
-            if table.get(minVert)[0] + dest.speed < table.get(dest.destinationIp)[0]:
-                table.get(dest.destinationIp)[0] = table.get(minVert)[0] + dest.speed
+            val = 0
+            if parameter == "speed":
+                val = dest.speed
+            elif parameter == "latency":
+                val = dest.latency
+            elif parameter == "bandwidth":
+                val = dest.bandwidth
+            if table.get(minVert)[0] + val < table.get(dest.destinationIp)[0]:
+                table.get(dest.destinationIp)[0] = table.get(minVert)[0] + val
                 table.get(dest.destinationIp)[1] = minVert
     return table
