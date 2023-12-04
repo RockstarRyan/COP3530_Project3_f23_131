@@ -7,7 +7,7 @@ from algorithms.dijkstra import *
 network = graph()
 
 def main():
-    for i in range(10):
+    for i in range(100000):
         network.generateIP()
     for i in network.ips:
         network.connect(i)
