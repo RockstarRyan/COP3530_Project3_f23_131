@@ -94,12 +94,12 @@ const Pages = (path) => {
 							}
 						}
 
-						var element = DOM.create('div',{},DOM.text(source+" "+destination+" "+measurement));
+						var element = DOM.create('div',{},DOM.text("Input: "+source+" "+destination+" "+measurement));
 						DOM.append(get('#computation-result'),element);
 
 						ajax('../content/scripts/input.php?source='+source+'&destination='+destination+'&measurement='+measurement,(response)=>{
-							var element = DOM.create('div',{},DOM.text(response.responseText));
-							DOM.append(get('#computation-result'),element);
+							//var element = DOM.create('div',{},DOM.text(response.responseText));
+							//DOM.append(get('#computation-result'),element);
 
 							ajax('../../graph/output.cgi',(response)=>{
 								var element = DOM.create('div',{},DOM.text(response.responseText));
