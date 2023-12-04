@@ -4,8 +4,8 @@ sys.path.append( '.' )
 from main import *
 from algorithms import *
 
-if __name__ == "__main__":
-    main()
+if __name__ == "__main__": 
+    readToFile()
     sourceIp = input("SourceIp: ")
     destinationIp = input("DestinationIp: ")
     parameter = "speed"

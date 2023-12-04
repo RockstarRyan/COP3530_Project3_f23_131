@@ -18,7 +18,11 @@ def generate():
         j+=1
     network.saveToFile()
     print('Done.')
-
+def readToFile():
+    file = open("nodes.csv", "r")
+    for row in file:
+       info = row.split(",")
+       network.insert(info[0], info[1], info[2], info[3], info[4][:-1])
 def dijkstraRun(sourceIp, destinationIp, parameter):
     table = dijkstra(network.graph, sourceIp, parameter)
     print(table)
