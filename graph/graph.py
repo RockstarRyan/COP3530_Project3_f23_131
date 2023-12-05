@@ -24,12 +24,6 @@ class graph:
             self.graph[sourceIp].append(linkInfo)
         else:
             self.graph[sourceIp] = [linkInfo]
-    def traverse(self):
-        for i in self.graph:
-            index = self.graph[i]
-            for j in index:
-                print(i, end=": ")
-                print(j.destinationIp, j.speed, j.latency, j.bandwidth)
     def saveToFile(self):
         file = open("nodes.csv", "w")
         for i in self.graph:
