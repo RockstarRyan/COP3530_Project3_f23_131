@@ -10,7 +10,6 @@ def dijkstra(graph, start, parameter):
     table = dict()
     s = set()
     table[start] = [0, None]
-
     vs = set()
     vs.add(start)
     for vertex in graph:
