@@ -20,6 +20,7 @@ def main():
         inputData = row.split(",")
         router1 = inputData[0]
         router2 = inputData[1]
+    file.close()
 
     if router1 == router2:
         print("{error:'"+"Router addresses cannot be the same!"+"'}")
@@ -30,8 +31,11 @@ def main():
         resultsB = bellmanFordRun(router1,router2,inputData[2])
         resultsD = dijkstraRun(router1,router2,inputData[2])
 
-        # Print algorithm results in JSON format (to be read by JS program)
-        print("Bellman-Ford: {count:"+ str(resultsB[0]) +", "+inputData[2]+":"+ str(resultsB[1])+"}, Dijkstra's: {count:" + str(resultsD[0]) +", "+inputData[2]+":"+ str(resultsD[1]) +"}")
+        # Print algorithm results (to be read by JS program)
+        # print("Bellman-Ford: {count:"+ str(resultsB[0]) +", "+inputData[2]+":"+ str(resultsB[1])+"}, Dijkstra's: {count:" + str(resultsD[0]) +", "+inputData[2]+":"+ str(resultsD[1]) +"}")
+        file = open("output.csv", "w")
+        file.write("Bellman-Ford: {count:"+ str(resultsB[0]) +", "+inputData[2]+":"+ str(resultsB[1])+"}, Dijkstra's: {count:" + str(resultsD[0]) +", "+inputData[2]+":"+ str(resultsD[1]) +"}")
+        file.close()
 
 if __name__ == '__main__':
     main()

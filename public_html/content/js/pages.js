@@ -19,7 +19,7 @@ const Pages = (path) => {
 						DOM.EZ.a('i','compute',{},'Compute')," the optimal path between two routers based on a specified parameter.",
 					]),
 				]),
-				DOM.create('p',{class:'article-foot'},DOM.text('Team #131')),
+				DOM.create('p',{class:'article-foot'},DOM.text('Team #131 – Jackson Kelly, Adam Benali, Ryan Gross')),
 			],
 			callback: () => {},
 		};
@@ -94,30 +94,44 @@ const Pages = (path) => {
 							}
 						}
 
-						var element = DOM.create('div',{},DOM.text("Input: {"+source+", "+destination+", "+measurement+"}"));
-						DOM.append(get('#computation-result'),element);
+						DOM.append(get('#computation-result'),[
+							DOM.create('div',{},DOM.text("Input: {"+source+", "+destination+", "+measurement+"}")),
+							DOM.create('div',{id:'computation-result-current'},DOM.text("Calculating results...")),
+						]);
 
 						ajax('../content/scripts/input.php?source='+source+'&destination='+destination+'&measurement='+measurement,(response)=>{
-							//var element = DOM.create('div',{},DOM.text(response.responseText));
-							//DOM.append(get('#computation-result'),element);
+							//DOM.append(get('#computation-result'),DOM.create('div',{},DOM.text(response.responseText)));
 
 							ajax('../../graph/output.cgi',(response)=>{
-								var element = DOM.create('div',{},DOM.text(response.responseText));
-								DOM.append(get('#computation-result'),element);
+								// Response will most likely fail (504), so read a script every 0.5 s
 							});
+
+							var loading = setInterval(() => {
+								ajax('../content/scripts/output.php',(response)=>{
+									//console.log(response.responseText);
+									if (response.responseText != "") {
+										clearInterval(loading);
+										get('#computation-result-current').innerText = response.responseText;
+										get('#computation-result-current').id = '';
+									}
+								});
+							},500);
 						});
 					})
 				]),
 				Widget.expandable.create('computation-results','Computation Results',true,[
+					DOM.EZ.p('Note that most calculations take roughly two minutes to compute/load.'),
 					DOM.create('p',{},[
-						DOM.create('strong',{},DOM.text('Result: ')),
+						DOM.create('strong',{},DOM.text('Results:')),
 						DOM.create('code',{id:'computation-result'})
 					]),
 					DOM.create('button',{onclick:'get("#computation-result").innerHTML=""'},DOM.text('Clear'))
 				]),
 			],
 			callback: () => {
-
+				// Disable options that don't work as expected
+				DOM.modify(get('#computation-settings-form-measurement').children[0],{disabled:''});
+				DOM.modify(get('#computation-settings-form-measurement').children[2],{disabled:''});
 			},
 		};
 	}}
