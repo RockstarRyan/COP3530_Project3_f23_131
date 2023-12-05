@@ -14,19 +14,23 @@ from main import *
 print('Content-type: text/html \n\n')
 
 def main():
-    # Don't worry about these for now...
-    router1 = "1.1.1.1"
-    router2 = "2.2.2.2"
+    # Get inputs
+    file = open("input.csv", "r")
+    for row in file:
+        inputData = row.split(",")
+        router1 = inputData[0]
+        router2 = inputData[1]
+
     if router1 == router2:
         print("{error:'"+"Router addresses cannot be the same!"+"'}")
         
     else:
         # Call graph algorithms
-        resultsB = bellmanFordRun(router1,router2,"latency")
-        resultsD = dijkstraRun(router1,router2,"latency")
+        resultsB = bellmanFordRun(router1,router2,inputData[2])
+        resultsD = dijkstraRun(router1,router2,inputData[2])
 
         # Print algorithm results in JSON format (to be read by JS program)
-        print("{bellmanFord:{count:'"+ str(resultsB[0]) +"', latency:'"+ str(resultsB[1]) +"'}, dijkstras:{count:'" + str(resultsD[0]) +"', latency:'"+ str(resultsD[1]) +"','}")
+        print("Bellman-Ford: {count:"+ str(resultsB[0]) +", "+inputData[2]+":"+ str(resultsB[1])+"}, Dijkstra's: {count:" + str(resultsD[0]) +", "+inputData[2]+":"+ str(resultsD[1]) +"}")
 
 if __name__ == '__main__':
     main()

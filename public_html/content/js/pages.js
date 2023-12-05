@@ -65,21 +65,21 @@ const Pages = (path) => {
 				Widget.expandable.create('computation-settings','Computation Settings',true,[
 					Widget.form.create('computation-settings-form',[
 						{label:'Source', props:[
-							{type:'number', min:0, max:255, placeholder:255},
-							{type:'number', min:0, max:255, placeholder:255},
-							{type:'number', min:0, max:255, placeholder:255},
-							{type:'number', min:0, max:255, placeholder:255},
+							{type:'number', min:0, max:255, placeholder:255, value:db.lines[0].split(',')[0].split('.')[0]},
+							{type:'number', min:0, max:255, placeholder:255, value:db.lines[0].split(',')[0].split('.')[1]},
+							{type:'number', min:0, max:255, placeholder:255, value:db.lines[0].split(',')[0].split('.')[2]},
+							{type:'number', min:0, max:255, placeholder:255, value:db.lines[0].split(',')[0].split('.')[3]},
 						]},
 						{label:'Destination', props:[
-							{type:'number', min:0, max:255, placeholder:255},
-							{type:'number', min:0, max:255, placeholder:255},
-							{type:'number', min:0, max:255, placeholder:255},
-							{type:'number', min:0, max:255, placeholder:255},
+							{type:'number', min:0, max:255, placeholder:255, value:db.lines[0].split(',')[1].split('.')[0]},
+							{type:'number', min:0, max:255, placeholder:255, value:db.lines[0].split(',')[1].split('.')[1]},
+							{type:'number', min:0, max:255, placeholder:255, value:db.lines[0].split(',')[1].split('.')[2]},
+							{type:'number', min:0, max:255, placeholder:255, value:db.lines[0].split(',')[1].split('.')[3]},
 						]},
 						{label:'Measurement', props:{type:'select',options:[
 							['Speed','speed'],
 							['Latency','latency'],
-							['Bandwidth','bandwidth']],selectedIndex:'speed'}},
+							['Bandwidth','bandwidth']],selectedIndex:'latency'}},
 					],() => {
 						var id = "#computation-settings-form";
 						var source = "", destination = "";
@@ -94,12 +94,12 @@ const Pages = (path) => {
 							}
 						}
 
-						var element = DOM.create('div',{},DOM.text(source+" "+destination+" "+measurement));
+						var element = DOM.create('div',{},DOM.text("Input: {"+source+", "+destination+", "+measurement+"}"));
 						DOM.append(get('#computation-result'),element);
 
 						ajax('../content/scripts/input.php?source='+source+'&destination='+destination+'&measurement='+measurement,(response)=>{
-							var element = DOM.create('div',{},DOM.text(response.responseText));
-							DOM.append(get('#computation-result'),element);
+							//var element = DOM.create('div',{},DOM.text(response.responseText));
+							//DOM.append(get('#computation-result'),element);
 
 							ajax('../../graph/output.cgi',(response)=>{
 								var element = DOM.create('div',{},DOM.text(response.responseText));
