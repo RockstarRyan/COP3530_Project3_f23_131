@@ -30,7 +30,7 @@ def main():
         resultsD = dijkstraRun(router1,router2,inputData[2])
 
         # Print algorithm results in JSON format (to be read by JS program)
-        print("Bellman-Ford: {count:"+ str(resultsB[0]) +", latency:"+ str(resultsB[1])+"}, Dijkstra's: {count:" + str(resultsD[0]) +", latency:"+ str(resultsD[1]) +"}")
+        print("Bellman-Ford: {count:"+ str(resultsB[0]) +", "+inputData[2]+":"+ str(resultsB[1])+"}, Dijkstra's: {count:" + str(resultsD[0]) +", "+inputData[2]+":"+ str(resultsD[1]) +"}")
 
 if __name__ == '__main__':
     main()

@@ -94,7 +94,7 @@ const Pages = (path) => {
 							}
 						}
 
-						var element = DOM.create('div',{},DOM.text("Input: "+source+" "+destination+" "+measurement));
+						var element = DOM.create('div',{},DOM.text("Input: {"+source+", "+destination+", "+measurement+"}"));
 						DOM.append(get('#computation-result'),element);
 
 						ajax('../content/scripts/input.php?source='+source+'&destination='+destination+'&measurement='+measurement,(response)=>{
