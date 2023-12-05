@@ -26,6 +26,7 @@ def main():
         
     else:
         # Call graph algorithms
+        readToFile()
         resultsB = bellmanFordRun(router1,router2,inputData[2])
         resultsD = dijkstraRun(router1,router2,inputData[2])
 
