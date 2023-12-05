@@ -22,15 +22,13 @@ $files = array();
 $files['index'] = new File('../../../graph/input.csv', $_GET['source'].','.$_GET['destination'].','.$_GET['measurement']);
 
 clearstatcache();
-$isError = false;
 
 foreach ($files as $name=>$file) {
-    $file->file = fopen($file->path, "w") or $isError = true;
+    $file->file = fopen($file->path, "w");
     if (fwrite($file->file, $file->content) != false) {
         $file->status = 'success';
     } else {
         $file->status = 'fail';
-        $isError = true;
     }
     fclose($file->file);
 }
